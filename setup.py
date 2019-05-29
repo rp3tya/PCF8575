@@ -1,59 +1,24 @@
-#  -*- coding: utf-8 -*-
-"""
-Setuptools script for the pcf8574 project.
-"""
+import setuptools
 
-import os
-from textwrap import fill, dedent
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
-
-
-def required(fname):
-    return open(
-        os.path.join(
-            os.path.dirname(__file__), fname
-        )
-    ).read().split('\n')
-
-
-setup(
-    name="pcf8574",
-    version="0.0.5",
-    packages=("pcf8574",),
-    scripts=[],
-    entry_points={},
-    include_package_data=True,
-    setup_requires='pytest-runner',
-    tests_require='pytest',
-    install_requires=required('requirements.txt'),
-    test_suite='pytest',
-    zip_safe=False,
-    # Metadata for upload to PyPI
-    author='Ellis Percival',
-    author_email="pcf8574@failcode.co.uk",
-    description="Library for communication with PCF8574 IO expander over I2C",
-    long_description=fill(dedent("""\
-        This is a library which can be used to communicate with one or many
-        pcf8574 IO expander ICs over an I2C interface.
-    """)),
+setuptools.setup(
+    name="pcf8575",
+    version="0.1",
+    author="rp3tya",
+    author_email="rpetya@hotmail.com",
+    description="Library for communication with PCF8575 IO expander over I2C",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/rp3tya/PCF8575",
+    install_requires=['smbus-cffi'],
+    packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python",
-        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Natural Language :: English",
         "Operating System :: OS Independent",
-        "Topic :: Communications",
-        "Topic :: Home Automation",
-        "Topic :: Software Development :: Embedded Systems",
-        "Topic :: System :: Networking"
     ],
-    license="MIT",
-    keywords="",
-    url="https://github.com/flyte/pcf8574"
+    keywords="pcf8575 pcf8574 i2c i/o expander multiplexer",
 )
+
