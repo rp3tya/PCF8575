@@ -25,7 +25,7 @@ class IOPort(list):
         """
         Represent port as a list of booleans.
         """
-        state = self.pcf8575.bus.read_byte(self.pcf8575.address)
+        state = self.pcf8575.bus.read_word_data(self.pcf8575.address, 0)
         ret = []
         for i in range(16):
             ret.append(bool(state & 1<<15-i))
@@ -73,23 +73,23 @@ class PCF8575(object):
         for i, val in enumerate(value):
             if val:
                 new_state |= 1 << 15-i
-        self.bus.write_byte(self.address, new_state)
+        self.bus.write_byte_data(self.address, new_state & 0xff, (new_state & 0xff ) >> 8)
 
     def set_output(self, output_number, value):
         """
         Set a specific output high (True) or low (False).
         """
         assert output_number in range(16), "Output number must be an integer between 0 and 15"
-        current_state = self.bus.read_byte(self.address)
+        current_state = self.bus.read_word_data(self.address, 0)
         bit = 1 << 15-output_number
         new_state = current_state | bit if value else current_state & (~bit & 0xff)
-        self.bus.write_byte(self.address, new_state)
+        self.bus.write_byte_data(self.address, new_state & 0xff, (new_state & 0xff ) >> 8)
 
     def get_pin_state(self, pin_number):
         """
         Get the boolean state of an individual pin.
         """
         assert pin_number in range(16), "Pin number must be an integer between 0 and 15"
-        state = self.bus.read_byte(self.address)
+        state = self.bus.read_word_data(self.address, 0)
         return bool(state & 1<<15-pin_number)
 
