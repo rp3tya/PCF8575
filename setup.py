@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pcf8575",
-    version="0.2",
+    version="0.3",
     author="rp3tya",
     author_email="rpetya@hotmail.com",
     description="Library for communication with PCF8575 IO expander over I2C",
